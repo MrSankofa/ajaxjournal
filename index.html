@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  <!-- <script src="https://code.jquery.com/jquery-3.4.0.min.js"></script>
+  <script type="text/javascript" src = "js/jquery-3.1.1.min.js"></script> -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body>
+  <h1>Brett</h1>
+  <div id="main"></div>
+  <script>
+    $(document).ready(function(){
+      
+      var main = $('#main');
+
+      $.ajax({
+        url: 'http://localhost:3000/',
+        type: 'GET',
+        dataType: 'JSON',
+        success: function(res) {
+          console.log('res: ', res);
+        }
+      }).then(function(response){
+        main.append(`<h2>${response.hello}</h2>`)
+      });
+
+      $.ajax({
+        url: 'https://api.stackexchange.com/2.2/questions?fromdate=955843200&todate=1555372800&order=desc&sort=votes&site=stackoverflow',
+        type: 'GET',
+        dataType: 'JSON',
+        success: function(res) {
+          console.log('res: ', res);
+        }
+      }).then(function(response){
+        console.log('response: ', response);
+        for(var i = 0; i < response.items.length; i++ ) {
+          main.append(`<h2>${response.items[i].title}</h2>`)
+        }
+        
+      });
+    });
+
+
+  </script>
+</body>
+</html>
